@@ -9,15 +9,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --orange: #E8622A;
-      --dark: #0F0F0F;
+      --dark:  #0F0F0F;
       --dark2: #1A1A1A;
       --dark3: #242424;
-      --text: #F0F0F0;
+      --text:  #F0F0F0;
       --muted: #888;
-      --border: #2E2E2E;
+      --border:#2E2E2E;
     }
-    html, body { height: 100%; font-family: "Inter", sans-serif; background: var(--dark); color: var(--text); overflow: hidden; }
-    .slides { width: 100%; height: 100vh; position: relative; }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", sans-serif; background: var(--dark); color: var(--text); }
+
+    /* =====================
+       SLIDESHOW
+    ===================== */
+    .slides { width: 100%; height: 100vh; position: relative; overflow: hidden; }
     .slide {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -117,7 +123,10 @@
     .slide-9 h2 { font-size: clamp(28px, 4.5vw, 56px); font-weight: 800; max-width: 700px; line-height: 1.15; margin-bottom: 24px; }
     .slide-9 h2 span { color: var(--orange); }
     .slide-9 p { font-size: 18px; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 36px; }
-    .slide-9 .arrow { font-size: 32px; color: var(--orange); animation: bounce 1.5s infinite; }
+    .slide-9 .arrow-link {
+      display: inline-block; color: var(--orange); font-size: 32px;
+      text-decoration: none; animation: bounce 1.5s infinite;
+    }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
     /* NAV */
@@ -134,13 +143,90 @@
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.2s, transform 0.2s; }
     .dot.active { background: var(--orange); transform: scale(1.3); }
     .progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--orange); transition: width 0.4s ease; z-index: 200; }
+
+    /* =====================
+       SECTION VIDÉO + FORMULAIRE
+    ===================== */
+    .apply-wrap {
+      background: var(--dark);
+      padding: 80px 24px 40px;
+    }
+
+    .apply-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Vidéo */
+    .video-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 20px;
+    }
+    .video-label::before,
+    .video-label::after {
+      content: ''; display: block; width: 24px; height: 1px;
+      background: var(--orange); opacity: 0.5;
+    }
+
+    .video-wrapper {
+      position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      margin-bottom: 64px;
+    }
+    .video-wrapper video {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: 12px;
+    }
+
+    /* Séparateur formulaire */
+    .form-heading {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .form-heading h3 {
+      font-size: clamp(22px, 3vw, 36px); font-weight: 800;
+      line-height: 1.2; margin-bottom: 10px;
+    }
+    .form-heading h3 span { color: var(--orange); }
+    .form-heading p {
+      font-size: 16px; color: var(--muted); line-height: 1.6;
+    }
+
+    .form-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      margin-bottom: 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark2);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .slide { padding: 32px 24px; }
+      .slide-1 h1 { font-size: 2rem; }
+      .temoignages { flex-direction: column; align-items: center; }
+      .role-items { flex-direction: column; align-items: center; }
+      .nav { bottom: 20px; padding: 8px 14px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="progress" id="progress"></div>
 
-<div class="slides">
+<div class="slides" id="slides">
 
   <!-- SLIDE 1 — ACCROCHE -->
   <div class="slide slide-1 active">
@@ -270,12 +356,12 @@
 
   <!-- SLIDE 9 — CTA -->
   <div class="slide slide-9">
-    <h2>Tu te reconnais ?<br><span>Postule maintenant.</span></h2>
-    <p>Si tu es disponible, coachable et réactif — remplis le formulaire ci-dessous. Si ton profil nous plaît, on te recontacte pour un échange. Merci à toi.</p>
-    <div class="arrow">↓</div>
+    <h2>Tu te reconnais ?<br><span>Candidate maintenant.</span></h2>
+    <p>Si tu es disponible, coachable et réactif — regarde la vidéo ci-dessous et remplis le formulaire. Si ton profil nous plaît, on te recontacte pour un échange.</p>
+    <a class="arrow-link" href="#postuler">↓</a>
   </div>
 
-</div>
+</div><!-- /slides -->
 
 <!-- NAV -->
 <nav class="nav">
@@ -284,6 +370,47 @@
   <div class="counter" id="counter">1 / 9</div>
   <button onclick="changeSlide(1)">→</button>
 </nav>
+
+<!-- =====================
+     SECTION VIDÉO + FORMULAIRE
+===================== -->
+<div class="apply-wrap" id="postuler">
+  <div class="apply-inner">
+
+    <!-- VIDÉO -->
+    <div style="text-align:center; margin-bottom: 20px;">
+      <div class="video-label">Regarde avant de postuler</div>
+    </div>
+    <div class="video-wrapper">
+      <video controls preload="metadata" playsinline>
+        <source src="video-recrutement.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture vidéo.
+      </video>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="form-heading">
+      <h3>Remplis le formulaire<br><span>ci-dessous</span></h3>
+      <p>2 minutes. Si ton profil nous plaît, on te contacte.</p>
+    </div>
+
+    <div class="form-card">
+      <iframe
+        src="https://airtable.com/embed/appXCBUw6lqC9ZMcC/pagGVNDJ6M86B2w9u/form"
+        title="Formulaire de candidature"
+        frameborder="0"
+        scrolling="yes"
+        style="width:100%; min-height:1200px; border:none; display:block;">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 CycloHacker · Tous droits réservés</p>
+</footer>
 
 <script>
   const slides = document.querySelectorAll(".slide");
@@ -313,7 +440,7 @@
 
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
-    if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+    if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   changeSlide(-1);
   });
 
   let touchStartX = 0;
@@ -321,6 +448,15 @@
   document.addEventListener("touchend", e => {
     const diff = touchStartX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+
+  // Masquer la nav quand on scroll sur le formulaire
+  const nav = document.querySelector(".nav");
+  const slidesEl = document.getElementById("slides");
+  window.addEventListener("scroll", () => {
+    const slidesBottom = slidesEl.getBoundingClientRect().bottom;
+    nav.style.opacity = slidesBottom > 80 ? "1" : "0";
+    nav.style.pointerEvents = slidesBottom > 80 ? "all" : "none";
   });
 
   progress.style.width = (1 / slides.length * 100) + "%";
